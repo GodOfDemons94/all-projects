@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Scramble Challenge</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4; /* Light gray background */
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .container_b {
+            margin-top: 15px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff; /* Blue heading */
+            margin-bottom: 20px;
+        }
+
+        #scrambled-word {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 0.1em; /* Add some letter spacing */
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1.2em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 250px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            outline: none; /* Remove default outline on focus */
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff; /* Blue border on focus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); /* Subtle shadow on focus */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+        #current_word_span {
+            font-family: sans-serif; /* Choose a suitable font */
+            font-size: 1.4em; /* Adjust text size */
+            font-weight: bold; /* Make it bold */
+            color: #333; /* Dark gray text color */
+            padding: 5px 10px; /* Add some padding around the text */
+            border-radius: 5px; /* Round the corners */
+            background-color: #eee; /* Light gray background */
+            background: linear-gradient(to bottom, #f9f9f9, #eee); /* Subtle gradient */
+            border: 1px solid #ddd; /* Light gray border */
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word Scramble Challenge</h1>
+        <p id="scrambled-word">{{ scrambled_word }}</p>
+        <form method="POST">
+            <input type="text" name="user_answer" autofocus placeholder="Enter your answer">
+            <button type="submit">Match Answer</button>
+        </form>
+        {% if result %}
+        <p id="result" class="{% if result == 'Correct!' %}correct{% else %}incorrect{% endif %}">{{ result }}</p>
+        {% endif %}
+    </div> 
+    <div class="container_b">
+        <h3>Check the correct answer here.</h3>
+        <span id="current_word_span">{{ current_word }}</span>
+    </div>
+    <script>
+        const currentWordSpan = document.getElementById('current_word_span');
+        const showButton = document.createElement('button');
+        showButton.textContent = 'Show';
+        showButton.addEventListener('click', () => {
+            if (currentWordSpan.style.display === 'none' || currentWordSpan.style.display === '') {
+                currentWordSpan.style.display = 'inline';
+                showButton.textContent = 'Hide';
+            } else {
+                currentWordSpan.style.display = 'none';
+                showButton.textContent = 'Show';
+            }
+        });
+        currentWordSpan.style.display = 'none'; // Initially hide the word
+        currentWordSpan.parentNode.insertBefore(showButton, currentWordSpan.nextSibling);
+
+    </script>
+</body>
+</html>
